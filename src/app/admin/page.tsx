@@ -7,6 +7,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { adminMetrics, dishAnalytics } from '@/data/admin';
 import { dishes } from '@/data/dishes';
 import { restaurant } from '@/data/restaurant';
+import { menuCodes } from '@/data/menu-codes';
 
 type AdminTab = 'dashboard' | 'dishes' | 'qr-codes';
 
@@ -156,25 +157,25 @@ function QRCodesTab() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-        {Array.from({ length: restaurant.totalTables }).map((_, i) => (
+        {menuCodes.map((mc, i) => (
           <motion.div
-            key={i}
+            key={mc.code}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: i * 0.03 }}
             className="bg-white rounded-2xl p-5 ring-1 ring-stone-100 flex flex-col items-center hover:ring-stone-200 hover:shadow-sm transition-all"
           >
-            <p className="text-xs font-semibold text-stone-900 mb-4">Table {i + 1}</p>
+            <p className="text-xs font-semibold text-stone-900 mb-4">Table {mc.tableNumber}</p>
             <div className="p-2 bg-white rounded-xl">
               <QRCodeSVG
-                value={`${baseUrl}/menu?table=${i + 1}`}
+                value={`${baseUrl}/m/${mc.code}`}
                 size={100}
                 bgColor="#FFFFFF"
                 fgColor="#1C1917"
                 level="M"
               />
             </div>
-            <p className="text-[10px] text-stone-300 mt-3 font-mono">/menu?table={i + 1}</p>
+            <p className="text-[10px] text-stone-300 mt-3 font-mono">/m/{mc.code}</p>
           </motion.div>
         ))}
       </div>

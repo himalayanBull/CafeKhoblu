@@ -57,14 +57,14 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-start gap-4"
           >
             <Link
-              href="/menu?table=1"
+              href="/m/Xk9f2w"
               className="group inline-flex items-center gap-3 px-7 py-4 bg-white text-gray-900 rounded-full font-semibold text-base hover:bg-amber-50 transition-all shadow-2xl shadow-white/10"
             >
               View Demo Menu
               <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
             <Link
-              href="/reels"
+              href="/m/Xk9f2w/reels"
               className="inline-flex items-center gap-3 px-7 py-4 border border-white/20 text-white rounded-full font-medium text-base hover:bg-white/5 transition-all"
             >
               Watch Food Reels

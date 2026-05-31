@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ChefHat, Flame, MapPin, TrendingUp, Star, ArrowRight } from 'lucide-react';
+import { ChefHat, Flame, MapPin, TrendingUp, Star } from 'lucide-react';
 import Link from 'next/link';
 import { dishes } from '@/data/dishes';
 
@@ -19,7 +19,7 @@ function SectionHeader({ title, icon: Icon, count }: { title: string; icon: Reac
   );
 }
 
-function HorizontalCard({ dish, index }: { dish: typeof dishes[0]; index: number }) {
+function HorizontalCard({ dish, index, basePath }: { dish: typeof dishes[0]; index: number; basePath: string }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -27,7 +27,7 @@ function HorizontalCard({ dish, index }: { dish: typeof dishes[0]; index: number
       transition={{ delay: index * 0.06 }}
       className="shrink-0"
     >
-      <Link href={`/dish/${dish.id}`}>
+      <Link href={`${basePath}/dish/${dish.id}`}>
         <div className="w-52 sm:w-64 rounded-2xl overflow-hidden bg-white ring-1 ring-stone-100 hover:ring-stone-200 hover:shadow-md transition-all duration-200 group">
           <div className="relative h-36 sm:h-40 overflow-hidden">
             <img
@@ -61,20 +61,20 @@ function HorizontalCard({ dish, index }: { dish: typeof dishes[0]; index: number
   );
 }
 
-function HorizontalScroll({ title, icon: Icon, items }: { title: string; icon: React.ElementType; items: typeof dishes }) {
+function HorizontalScroll({ title, icon: Icon, items, basePath }: { title: string; icon: React.ElementType; items: typeof dishes; basePath: string }) {
   return (
     <div className="mb-10">
       <SectionHeader title={title} icon={Icon} count={items.length} />
       <div className="flex gap-3.5 overflow-x-auto scrollbar-hide px-5 pb-2">
         {items.map((dish, i) => (
-          <HorizontalCard key={dish.id} dish={dish} index={i} />
+          <HorizontalCard key={dish.id} dish={dish} index={i} basePath={basePath} />
         ))}
       </div>
     </div>
   );
 }
 
-export function DiscoverySections() {
+export function DiscoverySections({ basePath }: { basePath: string }) {
   const chefRecommends = dishes.filter((d) => d.isChefRecommended);
   const mostOrdered = [...dishes].sort((a, b) => b.ordersToday - a.ordersToday).slice(0, 6);
   const localSpecialties = dishes.filter((d) => d.isLocalSpecialty);
@@ -82,10 +82,10 @@ export function DiscoverySections() {
 
   return (
     <div className="pt-8">
-      <HorizontalScroll title="Chef Recommends" icon={ChefHat} items={chefRecommends} />
-      <HorizontalScroll title="Most Ordered Today" icon={Flame} items={mostOrdered} />
-      <HorizontalScroll title="Himachali Specialties" icon={MapPin} items={localSpecialties} />
-      <HorizontalScroll title="Trending This Week" icon={TrendingUp} items={trending} />
+      <HorizontalScroll title="Chef Recommends" icon={ChefHat} items={chefRecommends} basePath={basePath} />
+      <HorizontalScroll title="Most Ordered Today" icon={Flame} items={mostOrdered} basePath={basePath} />
+      <HorizontalScroll title="Himachali Specialties" icon={MapPin} items={localSpecialties} basePath={basePath} />
+      <HorizontalScroll title="Trending This Week" icon={TrendingUp} items={trending} basePath={basePath} />
     </div>
   );
 }

@@ -10,16 +10,18 @@ import { AddToCartButton } from './Cart';
 interface DishCardProps {
   dish: Dish;
   index?: number;
+  basePath?: string;
 }
 
-export function DishCard({ dish, index = 0 }: DishCardProps) {
+export function DishCard({ dish, index = 0, basePath }: DishCardProps) {
+  const href = basePath ? `${basePath}/dish/${dish.id}` : `/dish/${dish.id}`;
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
     >
-      <Link href={`/dish/${dish.id}`}>
+      <Link href={href}>
         <div className="group relative bg-white rounded-3xl overflow-hidden ring-1 ring-stone-100 hover:ring-stone-200 hover:shadow-lg transition-all duration-300">
           <div className="relative aspect-[16/11] overflow-hidden">
             <img
